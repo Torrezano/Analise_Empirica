@@ -1,7 +1,7 @@
 import random
 import time
 
-TAMANHO = 20 # tamanho padrão de todos utilizado para os vetores de amostra
+TAMANHO = 200 # tamanho padrão de todos utilizado para os vetores de amostra
 
 # Função para gerar amostra aleatória
 
@@ -89,54 +89,119 @@ def mergeSort(array):
             j += 1
             k += 1
 
+# Quick sort in Python
+
+# função que faz a partição e retorna a posição onde ela ocorreu
+# (escolhe um pivo e coloca ele na posição correta, retornando o indice dessa posição)
+def partition(array, low, high):
+# low = menor posição do vetor
+# high = maior posição do vetor
+
+  # escolhe o elemento mais a direita como pivo
+  pivot = array[high]
+
+  # i aponta para o elemento que será usado na troca
+  i = low - 1
+
+  # percorre todo o vetor e compara cada elemento com o pivo
+  for j in range(low, high):
+    if array[j] <= pivot:
+      # Se um elemento menor do que o pivo for encontrado
+      # troca ele com o elemento apontado por i
+      i = i + 1
+
+      # troca o elemento na posição i com o elemento na posição j
+      (array[i], array[j]) = (array[j], array[i])
+
+  # troca o pivo com o elemento seguinte do elemento apontado por i (i+1)
+  (array[i + 1], array[high]) = (array[high], array[i + 1])
+
+  # retorna o indicine de onde ocorreu a partição do vetor
+  return i + 1
+
+# função que faz o quicksort
+def quickSort(array, low, high):
+# low = menor posição do vetor
+# high = maior posição do vetor
+  if low < high:
+
+    # pi é a posição do pivo
+    # após a função "partition":
+    # os elementos maiores que o pivo estão na sua direita no vetor
+    # os elementos menores que o pivo estão na sua esquerda no vetor
+    pi = partition(array, low, high)
+
+    # chamada recursica para os elementos à esquerda do pivo
+    quickSort(array, low, pi - 1)
+
+    # chamada recursica para os elementos à direita do pivo
+    quickSort(array, pi + 1, high)
+
+
+
 
 # Abaixo estão códigos feitos apenas para testar os algoritmos
 
 # ---------------------gerando amostras e testando o Insertion Sort ----------------------------------------------
 
 data = amostraAleatoria(TAMANHO,100)
-print('Vetor nao ordenado')
-print(data)
+# print('Vetor nao ordenado')
+# print(data)
 
 print('------------------------------------------------------------------')
 
 data2 = amostraInversa(TAMANHO)
-print('Vetor inversamente ordenado')
-print(data2)
+# print('Vetor inversamente ordenado')
+# print(data2)
 
 print('------------------------------------------------------------------')
 
 data3 = amostraSemiOrdenada(TAMANHO)
-print('Vetor semi-ordenado')
-print(data3)
+# print('Vetor semi-ordenado')
+# print(data3)
 
 # Executando o Inserction Sort e calculando o seu tempo de execução
 start_time = time.time()
-insertionSort(data)
+dataSel = data
+insertionSort(dataSel)
 end_time = time.time()
 finish_time = end_time - start_time # calcula o tempo de execução do programa
 print('Tempo em milesegundos da execucao do inserction sort:')
 print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
 #Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
 
-print('Vetor ordenado (amostra aleatoria):')
-print(data)
+# print('Vetor ordenado (amostra aleatoria):')
+# print(data)
 
 # ---------------------gerando uma nova amostra testar o Merge Sort ----------------------------------------------
 print('------------------------------------------------------------------')
 
-data = amostraAleatoria(TAMANHO,100)
-print('Vetor nao ordenado')
-print(data)
-
 # Executando o Merge Sort e calculando o seu tempo de execução
 start_time = time.time()
-mergeSort(data)
+dataMer = data
+mergeSort(dataMer)
 end_time = time.time()
 finish_time = end_time - start_time # calcula o tempo de execução do programa
 print('Tempo em milesegundos da execucao do Merge sort:')
 print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
 #Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
 
-print('Vetor ordenado (amostra aleatoria):')
-print(data)
+# print('Vetor ordenado (amostra aleatoria):')
+# print(data)
+
+# ---------------------gerando uma nova amostra testar o Quick Sort ----------------------------------------------
+
+dataQuick = data
+size = len(dataQuick)
+
+start_time = time.time()
+quickSort(dataQuick, 0, size - 1)
+end_time = time.time()
+
+finish_time = end_time - start_time # calcula o tempo de execução do programa
+print('Tempo em milesegundos da execucao do Quick sort:')
+print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
+#Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
+
+#print('Vetor ordenado (amostra aleatoria):')
+#print(data)
