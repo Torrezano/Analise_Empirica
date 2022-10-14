@@ -1,7 +1,8 @@
 import random
 import time
 
-TAMANHO = 200 # tamanho padrão de todos utilizado para os vetores de amostra
+
+TAMANHO = 1000 # tamanho padrão de todos utilizado para os vetores de amostra
 
 # Função para gerar amostra aleatória
 
@@ -157,7 +158,6 @@ def SelectionSort(array):
         array[contador]=menorAtual
         #Soma 1 ao contador para avançar o algoritmo
         contador = contador + 1
-    print(array)
     return 0
 
 # Abaixo estão códigos feitos apenas para testar os algoritmos
@@ -173,15 +173,7 @@ print('------------------------------------------------------------------')
 data2 = amostraInversa(TAMANHO)
 # print('Vetor inversamente ordenado')
 # print(data2)
-print(data)
-start_time = time.time()
-SelectionSort(data)
-end_time = time.time()
-finish_time = end_time-start_time
-print(finish_time)
 
-#Fiz isso aqui pra não continuar com o resto do código, só queria ver se oq eu fiz tava funcionando
-time.sleep(100000000)
 
 print('------------------------------------------------------------------')
 
@@ -189,38 +181,83 @@ data3 = amostraSemiOrdenada(TAMANHO)
 # print('Vetor semi-ordenado')
 # print(data3)
 
-# Executando o Inserction Sort e calculando o seu tempo de execução
+print('------------------------------------------------------------------')
+dataSelection = data3.copy()
+dataIn = data.copy()
+dataMer = data.copy()
+dataQuick = data.copy()
+#------------------------------------testando  Selection Sort----------------------------
+# print("data antes do Selection sort:")
+# print(data)
+# print("dataSelection antes do Selection sort:")
+# print(dataSelection)
+
 start_time = time.time()
-dataSel = data
-insertionSort(dataSel)
+SelectionSort(dataSelection)
 end_time = time.time()
+finish_time = end_time-start_time
+print('Tempo em milesegundos da execucao do selection sort:')
+print(finish_time*1000)
+
+# print("vetor ordenado (amostra aleatoria): ")
+# print(dataSelection)
+
+print('-------------------------------------------------------------------------------')
+#Fiz isso aqui pra não continuar com o resto do código, só queria ver se oq eu fiz tava funcionando
+#time.sleep(100000)
+
+# Executando o Inserction Sort e calculando o seu tempo de execução
+print('-------------------------------------------------------------------------------')
+# print("data antes do Inserction sort:")
+# print(data)
+# print("dataIn antes do Inserction sort:")
+# print(dataIn)
+
+start_time = time.time()
+insertionSort(dataIn)
+end_time = time.time()
+
 finish_time = end_time - start_time # calcula o tempo de execução do programa
 print('Tempo em milesegundos da execucao do inserction sort:')
 print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
 #Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
 
 # print('Vetor ordenado (amostra aleatoria):')
-# print(data)
+# print(dataIn)
+
+print('--------------------------------------------------------------------------------------------------')
 
 # ---------------------gerando uma nova amostra testar o Merge Sort ----------------------------------------------
-print('------------------------------------------------------------------')
+
 
 # Executando o Merge Sort e calculando o seu tempo de execução
+print('-------------------------------------------------------------------------------')
+# print("data antes do Merge sort:")
+# print(data)
+# print("dataMer antes do Merge sort:")
+# print(dataMer)
+
 start_time = time.time()
-dataMer = data
 mergeSort(dataMer)
 end_time = time.time()
+
 finish_time = end_time - start_time # calcula o tempo de execução do programa
 print('Tempo em milesegundos da execucao do Merge sort:')
 print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
 #Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
 
 # print('Vetor ordenado (amostra aleatoria):')
-# print(data)
+# print(dataMer)
+print('-------------------------------------------------------------------------------')
+
 
 # ---------------------gerando uma nova amostra testar o Quick Sort ----------------------------------------------
+print('-------------------------------------------------------------------------------')
+# print("data antes do Quicks sort:")
+# print(data)
+# print("dataQuick antes do Quick sort:")
+# print(dataQuick)
 
-dataQuick = data
 size = len(dataQuick)
 
 start_time = time.time()
@@ -232,5 +269,6 @@ print('Tempo em milesegundos da execucao do Quick sort:')
 print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
 #Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
 
-#print('Vetor ordenado (amostra aleatoria):')
-#print(data)
+# print('Vetor ordenado (amostra aleatoria):')
+# print(dataQuick)
+print('-------------------------------------------------------------------------------')
