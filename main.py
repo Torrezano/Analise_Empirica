@@ -137,8 +137,28 @@ def quickSort(array, low, high):
     # chamada recursica para os elementos à direita do pivo
     quickSort(array, pi + 1, high)
 
+#SelectionSort
 
-
+def SelectionSort(array):
+    #Inicializa o contador com 0, valor index inicial do vetor
+    contador = 0
+    while contador<len(array):
+        #Inicializa o menor valor com um valor bem grande, para garantir que o algoritmo vai funcionar
+        menorAtual = 1000000000000
+        IndexMenor = 0
+        for i in range(contador,len(array)):
+            #Se o valor da posição i do vetor for menor que o valor da variavel menorAtual, coloca o novo valor em menorAtual e o index em IndexMenor
+            if array[i]<menorAtual:
+                menorAtual = array[i]
+                IndexMenor = i
+        #Coloca o valor da posicao do contador na posicao do menorValor
+        array[IndexMenor]=array[contador]
+        #coloca o menor valor na posicao do contador
+        array[contador]=menorAtual
+        #Soma 1 ao contador para avançar o algoritmo
+        contador = contador + 1
+    print(array)
+    return 0
 
 # Abaixo estão códigos feitos apenas para testar os algoritmos
 
@@ -153,6 +173,15 @@ print('------------------------------------------------------------------')
 data2 = amostraInversa(TAMANHO)
 # print('Vetor inversamente ordenado')
 # print(data2)
+print(data)
+start_time = time.time()
+SelectionSort(data)
+end_time = time.time()
+finish_time = end_time-start_time
+print(finish_time)
+
+#Fiz isso aqui pra não continuar com o resto do código, só queria ver se oq eu fiz tava funcionando
+time.sleep(100000000)
 
 print('------------------------------------------------------------------')
 
