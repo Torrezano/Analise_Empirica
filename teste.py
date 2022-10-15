@@ -1,21 +1,9 @@
+# Usar este arquivo para testar os algoritmos de ordenação individualmente
+
 import random
 import time
 
-Lista = {}
-Lista['Insertion']  = {'Tempo':[],'Comparacoes':[],'Trocas':[]}
-Lista['Selection']  = {'Tempo':[],'Comparacoes':[],'Trocas':[]}
-Lista['Merge']  = {'Tempo':[],'Comparacoes':[],'Trocas':[]}
-Lista['Heap']  = {'Tempo':[],'Comparacoes':[],'Trocas':[]}
-Lista['Quick']  = {'Tempo':[],'Comparacoes':[],'Trocas':[]}
-
-Media = {}
-Media['Insertion']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
-Media['Selection']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
-Media['Merge']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
-Media['Heap']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
-Media['Quick']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
-
-TAMANHO = 500 # tamanho padrão de todos utilizado para os vetores de amostra
+TAMANHO = 10 # tamanho padrão de todos utilizado para os vetores de amostra
 
 # Função para gerar amostra aleatória
 
@@ -173,102 +161,115 @@ def SelectionSort(array):
         contador = contador + 1
     return 0
 
+# Abaixo estão códigos feitos apenas para testar os algoritmos
 
-# Ferramenta estatística
-for t in range(100,1100,100):
-    
-    # loop para executar cada algoritmo 1000 vezez
-    # a cada execução, é salvo seu valor do tempo 
-    # de execução, comparações e trocas em uma lista apropriada
-    for i in range(1000):
-        data = amostraAleatoria(t,t)
-        dataIn = data.copy()
-        dataSelection = data.copy()
-        dataMer = data.copy()
-    
-        dataQuick = data.copy()
-        # -----------------------------Insertion Sort---------------------------------------
-    
-        start_time = time.time()
-        insertionSort(dataIn)
-        end_time = time.time()
-    
-        Lista['Insertion']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Insertion']['Comparacoes'].append(0)
-        Lista['Insertion']['Trocas'].append(0)
-    
-        # -----------------------------Fim do Insertion Sort---------------------------------------
-    
-        # -----------------------------Selection Sort----------------------------------------------
-    
-        start_time = time.time()
-        SelectionSort(dataSelection)
-        end_time = time.time()
-    
-        Lista['Selection']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Selection']['Comparacoes'].append(0)
-        Lista['Selection']['Trocas'].append(0)
-    
-        # -----------------------------Fim do Selection Sort---------------------------------------
-    
-        # -----------------------------Merge Sort----------------------------------------------
-    
-        start_time = time.time()
-        mergeSort(dataMer)
-        end_time = time.time()
-    
-        Lista['Merge']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Merge']['Comparacoes'].append(0)
-        Lista['Merge']['Trocas'].append(0)
-    
-        # -----------------------------Fim do Merge Sort---------------------------------------
-    
-        # -----------------------------Heap Sort----------------------------------------------
-        Lista['Heap']['Tempo'].append(0)
-        Lista['Heap']['Comparacoes'].append(0)
-        Lista['Heap']['Trocas'].append(0)
-        # -----------------------------Fim do Heap Sort---------------------------------------
-    
-        # -----------------------------Quick Sort----------------------------------------------
-        size = len(dataQuick)
+# ---------------------gerando amostras e testando o Insertion Sort ----------------------------------------------
 
-        start_time = time.time()
-        quickSort(dataQuick, 0, size - 1)
-        end_time = time.time()
-    
-        Lista['Quick']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Quick']['Comparacoes'].append(0)
-        Lista['Quick']['Trocas'].append(0)
-        # -----------------------------Fim do Quick Sort---------------------------------------
-    
-    # loop para calcular as medidadas estatísticas (média e desvio padrão)
-    # todo: calcular desvio padrão
-    for algoritimo in Lista.keys():
-        for metrica in Lista[algoritimo].keys():
-            # if len(Lista[algoritimo][metrica]) == 0:
-            #     print(f"Algoritmo: {algoritimo} ; Metrica {metrica}")
-        
-            Media[algoritimo][metrica] = sum(Lista[algoritimo][metrica]) / len(Lista[algoritimo][metrica])
+data = amostraAleatoria(TAMANHO,100)
+# print('Vetor nao ordenado')
+# print(data)
 
-    print(f"Media do Tempo de Execucao com N = {t}:")
-    for algoritmo in Media.keys():
-        print(f"{algoritmo}: {Media[algoritmo]['Tempo']} milesegundos")
+print('------------------------------------------------------------------')
 
-    print('')
-    print('')
-
-    print(f"Media das Trocas com N = {t}:")
-    for algoritmo in Media.keys():
-        print(f"{algoritmo}: {Media[algoritmo]['Trocas']} trocas")
-
-    print('')
-    print('')
-
-    print(f"Media das Comparacoes com N = {t}:")
-    for algoritmo in Media.keys():
-        print(f"{algoritmo}: {Media[algoritmo]['Comparacoes']} comparacoes")
-
-    print('----------------------------------------------------------------------------------------------------------------')
-exit()
+data2 = amostraInversa(TAMANHO)
+# print('Vetor inversamente ordenado')
+# print(data2)
 
 
+print('------------------------------------------------------------------')
+
+data3 = amostraSemiOrdenada(TAMANHO)
+# print('Vetor semi-ordenado')
+# print(data3)
+
+print('------------------------------------------------------------------')
+dataSelection = data.copy()
+dataIn = data.copy()
+dataMer = data.copy()
+dataQuick = data.copy()
+#------------------------------------testando  Selection Sort----------------------------
+print("data antes do Selection sort:")
+print(data)
+print("dataSelection antes do Selection sort:")
+print(dataSelection)
+
+start_time = time.time()
+SelectionSort(dataSelection)
+end_time = time.time()
+finish_time = end_time-start_time
+print('Tempo em milesegundos da execucao do selection sort:')
+print(finish_time*1000)
+
+print("vetor ordenado (amostra aleatoria): ")
+print(dataSelection)
+
+print('-------------------------------------------------------------------------------')
+#Fiz isso aqui pra não continuar com o resto do código, só queria ver se oq eu fiz tava funcionando
+#time.sleep(100000)
+
+# Executando o Inserction Sort e calculando o seu tempo de execução
+print('-------------------------------------------------------------------------------')
+# print("data antes do Inserction sort:")
+# print(data)
+# print("dataIn antes do Inserction sort:")
+# print(dataIn)
+
+start_time = time.time()
+insertionSort(dataIn)
+end_time = time.time()
+
+finish_time = end_time - start_time # calcula o tempo de execução do programa
+print('Tempo em milesegundos da execucao do inserction sort:')
+print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
+#Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
+
+# print('Vetor ordenado (amostra aleatoria):')
+# print(dataIn)
+
+print('--------------------------------------------------------------------------------------------------')
+
+# ---------------------gerando uma nova amostra testar o Merge Sort ----------------------------------------------
+
+
+# Executando o Merge Sort e calculando o seu tempo de execução
+print('-------------------------------------------------------------------------------')
+# print("data antes do Merge sort:")
+# print(data)
+# print("dataMer antes do Merge sort:")
+# print(dataMer)
+
+start_time = time.time()
+mergeSort(dataMer)
+end_time = time.time()
+
+finish_time = end_time - start_time # calcula o tempo de execução do programa
+print('Tempo em milesegundos da execucao do Merge sort:')
+print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
+#Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
+
+# print('Vetor ordenado (amostra aleatoria):')
+# print(dataMer)
+print('-------------------------------------------------------------------------------')
+
+
+# ---------------------gerando uma nova amostra testar o Quick Sort ----------------------------------------------
+print('-------------------------------------------------------------------------------')
+# print("data antes do Quicks sort:")
+# print(data)
+# print("dataQuick antes do Quick sort:")
+# print(dataQuick)
+
+size = len(dataQuick)
+
+start_time = time.time()
+quickSort(dataQuick, 0, size - 1)
+end_time = time.time()
+
+finish_time = end_time - start_time # calcula o tempo de execução do programa
+print('Tempo em milesegundos da execucao do Quick sort:')
+print(finish_time*1000) # o valor de "finish_time" é dado em segundos, então é multiplicado por 1000 para exibir em milesegundos
+#Nota: se o tamanho do vetor for muito pequeno (como n=20), não será possível calcular o tempo de execução
+
+# print('Vetor ordenado (amostra aleatoria):')
+# print(dataQuick)
+print('-------------------------------------------------------------------------------')
