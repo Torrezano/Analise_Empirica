@@ -272,6 +272,7 @@ def HeapSort(array):
         (array[i], array[0]) = (array[0], array[i])  # Troca
         heapify(array, i, 0)
 
+
 TextoN = "N;"
 # Ferramenta estatística
 for t in range(100,1100,100):
@@ -284,60 +285,73 @@ for t in range(100,1100,100):
         dataIn = data.copy()
         dataSelection = data.copy()
         dataMer = data.copy()
-    
+        dataHeap = data.copy()
         dataQuick = data.copy()
         # -----------------------------Insertion Sort---------------------------------------
-    
+        NumCompInsert = 0
+        NumTrocasInsert = 0
         start_time = time.time()
         insertionSort(dataIn)
         end_time = time.time()
     
         Lista['Insertion']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Insertion']['Comparacoes'].append(0) #todo calcular quantas comparações o algoritmo faz e colocar  no lugar do 0
-        Lista['Insertion']['Trocas'].append(0) #todo calcular quantas trocas o algoritmo faz e colocar  no lugar do 0
+        Lista['Insertion']['Comparacoes'].append(NumCompInsert)
+        Lista['Insertion']['Trocas'].append(NumTrocasInsert)
     
         # -----------------------------Fim do Insertion Sort---------------------------------------
     
         # -----------------------------Selection Sort----------------------------------------------
-    
+
+        NumCompSelection = 0
+        NumTrocasSelection = 0
         start_time = time.time()
         SelectionSort(dataSelection)
         end_time = time.time()
     
         Lista['Selection']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Selection']['Comparacoes'].append(0)
-        Lista['Selection']['Trocas'].append(0)
+        Lista['Selection']['Comparacoes'].append(NumCompSelection)
+        Lista['Selection']['Trocas'].append(NumTrocasSelection)
     
         # -----------------------------Fim do Selection Sort---------------------------------------
     
         # -----------------------------Merge Sort----------------------------------------------
-    
+
+        NumCompMerge = 0
+        NumTrocasMerge = 0
         start_time = time.time()
         mergeSort(dataMer)
         end_time = time.time()
     
         Lista['Merge']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Merge']['Comparacoes'].append(0)
-        Lista['Merge']['Trocas'].append(0)
+        Lista['Merge']['Comparacoes'].append(NumCompMerge)
+        Lista['Merge']['Trocas'].append(NumTrocasMerge)
     
         # -----------------------------Fim do Merge Sort---------------------------------------
     
         # -----------------------------Heap Sort----------------------------------------------
-        Lista['Heap']['Tempo'].append(0)
-        Lista['Heap']['Comparacoes'].append(0)
-        Lista['Heap']['Trocas'].append(0)
+        NumCompHeap = 0
+        NumTrocasHeap = 0
+        start_time = time.time()
+        HeapSort(dataHeap)
+        end_time = time.time()
+        
+        Lista['Heap']['Tempo'].append((end_time-start_time)*1000)
+        Lista['Heap']['Comparacoes'].append(NumCompHeap)
+        Lista['Heap']['Trocas'].append(NumTrocasHeap)
         # -----------------------------Fim do Heap Sort---------------------------------------
     
         # -----------------------------Quick Sort----------------------------------------------
         size = len(dataQuick)
 
+        NumCompQuick = 0
+        NumTrocasQuick = 0
         start_time = time.time()
         quickSort(dataQuick, 0, size - 1)
         end_time = time.time()
     
         Lista['Quick']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Quick']['Comparacoes'].append(0)
-        Lista['Quick']['Trocas'].append(0)
+        Lista['Quick']['Comparacoes'].append(NumCompQuick)
+        Lista['Quick']['Trocas'].append(NumTrocasQuick)
         # -----------------------------Fim do Quick Sort---------------------------------------
     
     # loop para calcular as medidadas estatísticas (média e desvio padrão)
