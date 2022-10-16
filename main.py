@@ -1,5 +1,6 @@
 import random
 import time
+from xml.etree.ElementTree import tostring
 
 Lista = {}
 Lista['Insertion']  = {'Tempo':[],'Comparacoes':[],'Trocas':[]}
@@ -14,6 +15,34 @@ Media['Selection']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Merge']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Heap']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Quick']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
+
+Texto = {
+    'Insertion':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Selection':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Merge':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Heap':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Quick':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        }
+}
 
 TAMANHO = 500 # tamanho padrão de todos utilizado para os vetores de amostra
 
@@ -173,10 +202,10 @@ def SelectionSort(array):
         contador = contador + 1
     return 0
 
-
+TextoN = "N;"
 # Ferramenta estatística
 for t in range(100,1100,100):
-    
+    TextoN += str(t)+";"
     # loop para executar cada algoritmo 1000 vezez
     # a cada execução, é salvo seu valor do tempo 
     # de execução, comparações e trocas em uma lista apropriada
@@ -194,8 +223,8 @@ for t in range(100,1100,100):
         end_time = time.time()
     
         Lista['Insertion']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Insertion']['Comparacoes'].append(0)
-        Lista['Insertion']['Trocas'].append(0)
+        Lista['Insertion']['Comparacoes'].append(0) #todo calcular quantas comparações o algoritmo faz e colocar  no lugar do 0
+        Lista['Insertion']['Trocas'].append(0) #todo calcular quantas trocas o algoritmo faz e colocar  no lugar do 0
     
         # -----------------------------Fim do Insertion Sort---------------------------------------
     
@@ -243,16 +272,17 @@ for t in range(100,1100,100):
     
     # loop para calcular as medidadas estatísticas (média e desvio padrão)
     # todo: calcular desvio padrão
-    for algoritimo in Lista.keys():
-        for metrica in Lista[algoritimo].keys():
+    for algoritmo in Lista.keys():
+        for metrica in Lista[algoritmo].keys():
             # if len(Lista[algoritimo][metrica]) == 0:
             #     print(f"Algoritmo: {algoritimo} ; Metrica {metrica}")
         
-            Media[algoritimo][metrica] = sum(Lista[algoritimo][metrica]) / len(Lista[algoritimo][metrica])
+            Media[algoritmo][metrica] = sum(Lista[algoritmo][metrica]) / len(Lista[algoritmo][metrica])
 
     print(f"Media do Tempo de Execucao com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Tempo']} milesegundos")
+        Texto[algoritmo]["Tempo"] +=  str(Media[algoritmo]['Tempo'])+";"
 
     print('')
     print('')
@@ -260,6 +290,7 @@ for t in range(100,1100,100):
     print(f"Media das Trocas com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Trocas']} trocas")
+        Texto[algoritmo]["Trocas"] +=  str(Media[algoritmo]['Trocas'])+";"
 
     print('')
     print('')
@@ -267,8 +298,29 @@ for t in range(100,1100,100):
     print(f"Media das Comparacoes com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Comparacoes']} comparacoes")
+        Texto[algoritmo]["Comparacoes"] +=  str(Media[algoritmo]['Comparacoes'])+";"
 
     print('----------------------------------------------------------------------------------------------------------------')
+
+Texto_Completo = ""
+for algoritmo in  Texto.keys():
+    Texto_Completo +=  str(algoritmo)+"\n"
+    Texto_Completo += TextoN+"\n"
+    for metrica in Texto[algoritmo].keys():
+        Texto_Completo += str(metrica)+";"+Texto[algoritmo][metrica]+"\n"
+    Texto_Completo += "\n\n"
+
+for metrica in ["Tempo","Trocas","Comparacoes"]:
+    Texto_Completo +=  str(metrica)+"\n"
+    Texto_Completo += TextoN+"\n"
+    for algoritmo in Texto.keys():
+        Texto_Completo += str(algoritmo)+";"+Texto[algoritmo][metrica]+"\n"
+    Texto_Completo += "\n\n"
+
+file = open('Analise_Empirica.txt','w')
+file.write(Texto_Completo)
+file.close()
+
 exit()
 
 
