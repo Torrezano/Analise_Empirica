@@ -28,34 +28,6 @@ Media['Merge']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Heap']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Quick']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 
-Texto = {
-    'Insertion':{
-        "Tempo":"",
-        "Comparacoes":"",
-        "Trocas":""
-        },
-    'Selection':{
-        "Tempo":"",
-        "Comparacoes":"",
-        "Trocas":""
-        },
-    'Merge':{
-        "Tempo":"",
-        "Comparacoes":"",
-        "Trocas":""
-        },
-    'Heap':{
-        "Tempo":"",
-        "Comparacoes":"",
-        "Trocas":""
-        },
-    'Quick':{
-        "Tempo":"",
-        "Comparacoes":"",
-        "Trocas":""
-        }
-}
-
 TAMANHO = 500 # tamanho padrão de todos utilizado para os vetores de amostra
 
 # Função para gerar amostra aleatória
@@ -272,10 +244,10 @@ def HeapSort(array):
         (array[i], array[0]) = (array[0], array[i])  # Troca
         heapify(array, i, 0)
 
-TextoN = "N;"
+
 # Ferramenta estatística
 for t in range(100,1100,100):
-    TextoN += str(t)+";"
+    
     # loop para executar cada algoritmo 1000 vezez
     # a cada execução, é salvo seu valor do tempo 
     # de execução, comparações e trocas em uma lista apropriada
@@ -287,48 +259,59 @@ for t in range(100,1100,100):
     
         dataQuick = data.copy()
         # -----------------------------Insertion Sort---------------------------------------
-    
+        NumCompInsert   = 0
+        NumTrocasInsert = 0
         start_time = time.time()
         insertionSort(dataIn)
         end_time = time.time()
     
         Lista['Insertion']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Insertion']['Comparacoes'].append(0) #todo calcular quantas comparações o algoritmo faz e colocar  no lugar do 0
-        Lista['Insertion']['Trocas'].append(0) #todo calcular quantas trocas o algoritmo faz e colocar  no lugar do 0
+        Lista['Insertion']['Comparacoes'].append(NumCompInsert)
+        Lista['Insertion']['Trocas'].append(NumTrocasInsert)
     
         # -----------------------------Fim do Insertion Sort---------------------------------------
     
         # -----------------------------Selection Sort----------------------------------------------
-    
+        NumCompSelection   = 0
+        NumTrocasSelection = 0
         start_time = time.time()
         SelectionSort(dataSelection)
         end_time = time.time()
     
         Lista['Selection']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Selection']['Comparacoes'].append(0)
-        Lista['Selection']['Trocas'].append(0)
+        Lista['Selection']['Comparacoes'].append(NumCompSelection)
+        Lista['Selection']['Trocas'].append(NumTrocasSelection)
     
         # -----------------------------Fim do Selection Sort---------------------------------------
     
         # -----------------------------Merge Sort----------------------------------------------
-    
+        NumCompMerge   = 0
+        NumTrocasMerge = 0
         start_time = time.time()
         mergeSort(dataMer)
         end_time = time.time()
     
         Lista['Merge']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Merge']['Comparacoes'].append(0)
-        Lista['Merge']['Trocas'].append(0)
+        Lista['Merge']['Comparacoes'].append(NumCompMerge)
+        Lista['Merge']['Trocas'].append(NumTrocasMerge)
     
         # -----------------------------Fim do Merge Sort---------------------------------------
     
         # -----------------------------Heap Sort----------------------------------------------
-        Lista['Heap']['Tempo'].append(0)
-        Lista['Heap']['Comparacoes'].append(0)
-        Lista['Heap']['Trocas'].append(0)
+        NumCompHeap   = 0
+        NumTrocasHeap = 0
+        start_time = time.time()
+        HeapSort(dataMer)
+        end_time = time.time()
+
+        Lista['Heap']['Tempo'].append((end_time-start_time)*1000)
+        Lista['Heap']['Comparacoes'].append(NumCompHeap)
+        Lista['Heap']['Trocas'].append(NumTrocasHeap)
         # -----------------------------Fim do Heap Sort---------------------------------------
     
         # -----------------------------Quick Sort----------------------------------------------
+        NumCompQuick   = 0
+        NumTrocasQuick = 0
         size = len(dataQuick)
 
         start_time = time.time()
@@ -336,23 +319,22 @@ for t in range(100,1100,100):
         end_time = time.time()
     
         Lista['Quick']['Tempo'].append((end_time-start_time)*1000)
-        Lista['Quick']['Comparacoes'].append(0)
-        Lista['Quick']['Trocas'].append(0)
+        Lista['Quick']['Comparacoes'].append(NumCompQuick)
+        Lista['Quick']['Trocas'].append(NumTrocasQuick)
         # -----------------------------Fim do Quick Sort---------------------------------------
     
     # loop para calcular as medidadas estatísticas (média e desvio padrão)
     # todo: calcular desvio padrão
-    for algoritmo in Lista.keys():
-        for metrica in Lista[algoritmo].keys():
+    for algoritimo in Lista.keys():
+        for metrica in Lista[algoritimo].keys():
             # if len(Lista[algoritimo][metrica]) == 0:
             #     print(f"Algoritmo: {algoritimo} ; Metrica {metrica}")
         
-            Media[algoritmo][metrica] = sum(Lista[algoritmo][metrica]) / len(Lista[algoritmo][metrica])
+            Media[algoritimo][metrica] = sum(Lista[algoritimo][metrica]) / len(Lista[algoritimo][metrica])
 
     print(f"Media do Tempo de Execucao com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Tempo']} milesegundos")
-        Texto[algoritmo]["Tempo"] +=  str(Media[algoritmo]['Tempo'])+";"
 
     print('')
     print('')
@@ -360,7 +342,6 @@ for t in range(100,1100,100):
     print(f"Media das Trocas com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Trocas']} trocas")
-        Texto[algoritmo]["Trocas"] +=  str(Media[algoritmo]['Trocas'])+";"
 
     print('')
     print('')
@@ -368,29 +349,8 @@ for t in range(100,1100,100):
     print(f"Media das Comparacoes com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Comparacoes']} comparacoes")
-        Texto[algoritmo]["Comparacoes"] +=  str(Media[algoritmo]['Comparacoes'])+";"
 
     print('----------------------------------------------------------------------------------------------------------------')
-
-Texto_Completo = ""
-for algoritmo in  Texto.keys():
-    Texto_Completo +=  str(algoritmo)+"\n"
-    Texto_Completo += TextoN+"\n"
-    for metrica in Texto[algoritmo].keys():
-        Texto_Completo += str(metrica)+";"+Texto[algoritmo][metrica]+"\n"
-    Texto_Completo += "\n\n"
-
-for metrica in ["Tempo","Trocas","Comparacoes"]:
-    Texto_Completo +=  str(metrica)+"\n"
-    Texto_Completo += TextoN+"\n"
-    for algoritmo in Texto.keys():
-        Texto_Completo += str(algoritmo)+";"+Texto[algoritmo][metrica]+"\n"
-    Texto_Completo += "\n\n"
-
-file = open('Analise_Empirica.txt','w')
-file.write(Texto_Completo)
-file.close()
-
 exit()
 
 
