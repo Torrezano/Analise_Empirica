@@ -448,10 +448,17 @@ for algoritmo in  TextoM.keys():
     Texto_Completo += "\n\n"
 
 for metrica in ["Tempo","Trocas","Comparacoes"]:
-    Texto_Completo +=  str(metrica)+"\n"
+    Texto_Completo +=  str(metrica)+" Média\n"
     Texto_Completo += TextoN+"\n"
     for algoritmo in TextoM.keys():
         Texto_Completo += str(algoritmo)+";"+TextoM[algoritmo][metrica]+"\n"
+    Texto_Completo += "\n\n"
+    
+for metrica in ["Tempo","Trocas","Comparacoes"]:
+    Texto_Completo +=  str(metrica)+" Devio Padrão\n"
+    Texto_Completo += TextoN+"\n"
+    for algoritmo in TextoDesvioP.keys():
+        Texto_Completo += str(algoritmo)+";"+TextoDesvioP[algoritmo][metrica]+"\n"
     Texto_Completo += "\n\n"
 
 file = open('Analise_Empirica.txt','w')
