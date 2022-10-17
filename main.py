@@ -2,6 +2,7 @@ import random
 import time
 from xml.etree.ElementTree import tostring
 import math
+import statistics
 
 NumTrocasInsert = 0
 NumTrocasMerge = 0
@@ -93,13 +94,6 @@ TextoDesvioP = {
 }
 
 TAMANHO = 500 # tamanho padrão de todos utilizado para os vetores de amostra
-
-# Função para calcular o desvio padrão
-def desvio_padrao(vetor, m):
-    a = 0
-    for x in vetor:
-        a = a + (x - m) ** 2  # somatorio de (x - média)²
-    return math.sqrt(a / (len(vetor) - 1))  # retorna a raiz quadrada do somatorio dividido por (n - 1)
 
 
 # Função para gerar amostra aleatória
@@ -405,7 +399,7 @@ for t in range(100,1100,100):
             #     print(f"Algoritmo: {algoritimo} ; Metrica {metrica}")
         
             Media[algoritmo][metrica] = sum(Lista[algoritmo][metrica]) / len(Lista[algoritmo][metrica])
-            DesvioP[algoritmo][metrica] = desvio_padrao(Lista[algoritmo][metrica],Media[algoritmo][metrica])
+            DesvioP[algoritmo][metrica] = statistics.pstdev(Lista[algoritmo][metrica])
 
     print(f"Media do Tempo de Execucao com N = {t}:")
     for algoritmo in Media.keys():
