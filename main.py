@@ -1,6 +1,7 @@
 import random
 import time
 from xml.etree.ElementTree import tostring
+import math
 
 NumTrocasInsert = 0
 NumTrocasMerge = 0
@@ -28,7 +29,42 @@ Media['Merge']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Heap']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 Media['Quick']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
 
-Texto = {
+DesvioP = {}
+DesvioP['Insertion']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
+DesvioP['Selection']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
+DesvioP['Merge']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
+DesvioP['Heap']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
+DesvioP['Quick']  = {'Tempo':0,'Comparacoes':0,'Trocas':0}
+
+TextoM = {
+    'Insertion':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Selection':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Merge':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Heap':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        },
+    'Quick':{
+        "Tempo":"",
+        "Comparacoes":"",
+        "Trocas":""
+        }
+}
+
+TextoDesvioP = {
     'Insertion':{
         "Tempo":"",
         "Comparacoes":"",
@@ -58,8 +94,15 @@ Texto = {
 
 TAMANHO = 500 # tamanho padrão de todos utilizado para os vetores de amostra
 
-# Função para gerar amostra aleatória
+# Função para calcular o desvio padrão
+def desvio_padrao(vetor, m):
+    a = 0
+    for x in vetor:
+        a = a + (x - m) ** 2  # somatorio de (x - média)²
+    return math.sqrt(a / (len(vetor) - 1))  # retorna a raiz quadrada do somatorio dividido por (n - 1)
 
+
+# Função para gerar amostra aleatória
 def amostraAleatoria(n, max):
     # Resumo: a função retorna um vetor de n posições preenchido com números aleatórios de 1 até max (apenas inteiros positivos)
     # n = o tamanho do vetor
@@ -362,11 +405,13 @@ for t in range(100,1100,100):
             #     print(f"Algoritmo: {algoritimo} ; Metrica {metrica}")
         
             Media[algoritmo][metrica] = sum(Lista[algoritmo][metrica]) / len(Lista[algoritmo][metrica])
+            DesvioP[algoritmo][metrica] = desvio_padrao(Lista[algoritmo][metrica],Media[algoritmo][metrica])
 
     print(f"Media do Tempo de Execucao com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Tempo']} milesegundos")
-        Texto[algoritmo]["Tempo"] +=  str(Media[algoritmo]['Tempo'])+";"
+        TextoM[algoritmo]["Tempo"] +=  str(Media[algoritmo]['Tempo'])+";"
+        TextoDesvioP[algoritmo]["Tempo"] += str(DesvioP[algoritmo]['Tempo'])+";"
 
     print('')
     print('')
@@ -374,7 +419,8 @@ for t in range(100,1100,100):
     print(f"Media das Trocas com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Trocas']} trocas")
-        Texto[algoritmo]["Trocas"] +=  str(Media[algoritmo]['Trocas'])+";"
+        TextoM[algoritmo]["Trocas"] +=  str(Media[algoritmo]['Trocas'])+";"
+        TextoDesvioP[algoritmo]["Trocas"] +=  str(DesvioP[algoritmo]['Trocas'])+";"
 
     print('')
     print('')
@@ -382,23 +428,30 @@ for t in range(100,1100,100):
     print(f"Media das Comparacoes com N = {t}:")
     for algoritmo in Media.keys():
         print(f"{algoritmo}: {Media[algoritmo]['Comparacoes']} comparacoes")
-        Texto[algoritmo]["Comparacoes"] +=  str(Media[algoritmo]['Comparacoes'])+";"
+        TextoM[algoritmo]["Comparacoes"] +=  str(Media[algoritmo]['Comparacoes'])+";"
+        TextoDesvioP[algoritmo]["Comparacoes"] +=  str(DesvioP[algoritmo]['Comparacoes'])+";"
 
     print('----------------------------------------------------------------------------------------------------------------')
 
 Texto_Completo = ""
-for algoritmo in  Texto.keys():
-    Texto_Completo +=  str(algoritmo)+"\n"
+for algoritmo in  TextoM.keys():
+    Texto_Completo +=  str(algoritmo)+" Média\n"
     Texto_Completo += TextoN+"\n"
-    for metrica in Texto[algoritmo].keys():
-        Texto_Completo += str(metrica)+";"+Texto[algoritmo][metrica]+"\n"
+    for metrica in TextoM[algoritmo].keys():
+        Texto_Completo += str(metrica)+";"+TextoM[algoritmo][metrica]+"\n"
+    Texto_Completo += "\n\n"
+    
+    Texto_Completo +=  str(algoritmo)+" Devio Padrão\n"
+    Texto_Completo += TextoN+"\n"
+    for metrica in TextoDesvioP[algoritmo].keys():
+        Texto_Completo += str(metrica)+";"+TextoDesvioP[algoritmo][metrica]+"\n"
     Texto_Completo += "\n\n"
 
 for metrica in ["Tempo","Trocas","Comparacoes"]:
     Texto_Completo +=  str(metrica)+"\n"
     Texto_Completo += TextoN+"\n"
-    for algoritmo in Texto.keys():
-        Texto_Completo += str(algoritmo)+";"+Texto[algoritmo][metrica]+"\n"
+    for algoritmo in TextoM.keys():
+        Texto_Completo += str(algoritmo)+";"+TextoM[algoritmo][metrica]+"\n"
     Texto_Completo += "\n\n"
 
 file = open('Analise_Empirica.txt','w')
