@@ -254,8 +254,8 @@ def SelectionSort(array):
     global NumTrocasSelection 
     contador = 0 #Inicializa o contador com 0, valor index inicial do vetor
     while contador<len(array):       
-        menorAtual = float('inf')  #Inicializa o menor valor com um valor bem grande, para garantir que o algoritmo vai funcionar
-        IndexMenor = float('-inf')
+        menorAtual = array[contador]
+        IndexMenor = contador
         for i in range(contador,len(array)):            
             NumCompSelection = NumCompSelection + 1
             #Se o valor da posição i do vetor for menor que o valor da variavel menorAtual, coloca o novo valor em menorAtual e o index em IndexMenor
@@ -312,8 +312,13 @@ def HeapSort(array):
 
 TextoN = "N;"
 # Ferramenta estatística
-for t in range(100,1100,100):
+for t in range(100,2100,100):
     TextoN += str(t)+";"
+    for algoritmo in Lista.keys():
+        for metrica in Lista[algoritmo].keys():
+            Lista[algoritmo][metrica].clear()
+            Media[algoritmo][metrica] = 0
+            DesvioP[algoritmo][metrica] = 0
     # loop para executar cada algoritmo 1000 vezez
     # a cada execução, é salvo seu valor do tempo 
     # de execução, comparações e trocas em uma lista apropriada
@@ -392,12 +397,8 @@ for t in range(100,1100,100):
         # -----------------------------Fim do Quick Sort---------------------------------------
     
     # loop para calcular as medidadas estatísticas (média e desvio padrão)
-    # todo: calcular desvio padrão
     for algoritmo in Lista.keys():
-        for metrica in Lista[algoritmo].keys():
-            # if len(Lista[algoritimo][metrica]) == 0:
-            #     print(f"Algoritmo: {algoritimo} ; Metrica {metrica}")
-        
+        for metrica in Lista[algoritmo].keys():       
             Media[algoritmo][metrica] = sum(Lista[algoritmo][metrica]) / len(Lista[algoritmo][metrica])
             DesvioP[algoritmo][metrica] = statistics.pstdev(Lista[algoritmo][metrica])
 

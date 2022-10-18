@@ -146,8 +146,8 @@ def SelectionSort(array):
     contador = 0
     while contador<len(array):
         #Inicializa o menor valor com um valor bem grande, para garantir que o algoritmo vai funcionar
-        menorAtual = float('inf')
-        IndexMenor = float('-inf')
+        menorAtual = array[contador]
+        IndexMenor = contador
         for i in range(contador,len(array)):
             #Se o valor da posição i do vetor for menor que o valor da variavel menorAtual, coloca o novo valor em menorAtual e o index em IndexMenor
             if array[i]<menorAtual:
